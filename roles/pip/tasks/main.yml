@@ -1,0 +1,19 @@
+---
+- name: install pip
+  command: python /tmp/get-pip.py
+
+- pip:
+    name: redis
+
+- pip:
+    name: flask
+
+- pip:
+    name: flask-sqlalchemy
+
+- pip:
+    name: flask_marshmallow
+
+- pip:
+    name: pymysql
+
