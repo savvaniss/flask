@@ -15,27 +15,5 @@
 - name: 4. change initdb.py to be executable
   file: dest=/opt/flask/initdb.py mode=+x
 
-- name: Download pip
-  get_url:
-    url: https://bootstrap.pypa.io/get-pip.py
-    dest: /tmp/get-pip.py
-
-- name: install pip
-  command: python /tmp/get-pip.py
-
-- pip:
-    name: redis
-
-- pip:
-    name: flask
-
-- pip:
-    name: flask-sqlalchemy
-
-- pip: 
-    name: flask_marshmallow
-
-- pip:
-    name: pymysql
 - name: 5. run initdb.py 
   command: python /opt/flask/initdb.py
