@@ -1,0 +1,6 @@
+---
+- name: 1. Install Vagrant server package
+  apt: name=vagrant state=present
+
+- name: install virtualbox
+  apt: name=virtualbox state=present

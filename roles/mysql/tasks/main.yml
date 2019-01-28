@@ -1,0 +1,17 @@
+---
+- name: Install MySQL packages
+  apt: name=mysql-server state=present
+
+#create a temp user to use for change root password change root user pass to "root"
+
+- mysql_user:
+    login_user: root
+    name: root
+    password: root
+    priv: '*.*:ALL'
+    host_all: yes
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Restart the MySQL service
+  action: service name=mysql state=restarted enabled=true

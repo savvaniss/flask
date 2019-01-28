@@ -1,0 +1,6 @@
+---
+- hosts: encode
+  roles:
+#    - mysql
+#    - flask
+    - vagrant
