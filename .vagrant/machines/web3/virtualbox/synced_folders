@@ -1,1 +1,0 @@
-{"virtualbox":{"/opt/flask":{"guestpath":"/opt/flask","hostpath":"/opt/flask","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/etc/ansible","disabled":false,"__vagrantfile":true}}}
