@@ -15,11 +15,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     "all_groups:children" => ["webservers","loadbalancers"]
   }
 
-  # create some web servers
+#create web servers
   (1..NUMBER_OF_WEBSERVERS).each do |i|
     config.ssh.insert_key = false
     config.vm.synced_folder "/opt/flask", "/opt/flask"
-  #  config.ssh.password="12345"
     config.vm.define "web#{i}" do |node|
         node.vm.box = VM_VERSION
         node.vm.hostname = "web#{i}"
@@ -28,9 +27,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         node.vm.provider VAGRANT_VM_PROVIDER do |vb|
           vb.memory = MEMORY
         end
-
-    # Only execute once the Ansible provisioner,
-    # when all the machines are up and ready.
 
       if i == NUMBER_OF_WEBSERVERS
           node.vm.provision "ansible" do |ansible|
@@ -48,7 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # create load balancer
     config.vm.define "load_balancer" do |lb_config|
         config.ssh.insert_key = false
-      #  config.ssh.password="12345"
+
         lb_config.vm.box = VM_VERSION
         lb_config.vm.hostname = "lb"
         lb_config.vm.network :private_network, ip: "10.0.15.11"

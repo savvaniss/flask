@@ -1,7 +1,7 @@
 ---
 - hosts: encode
   roles:
-#    - pip
-#    - mysql
+    - pip
+    - mysql
     - flask
-#    - vagrant
+    - vagrant
