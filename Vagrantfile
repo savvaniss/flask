@@ -5,7 +5,6 @@ MEMORY = 256
 ADMIN_USER = "vagrant"
 ADMIN_PASSWORD = "vagrant"
 VM_VERSION= "ubuntu/trusty64"
-#VM_VERSION= "https://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
 VAGRANT_VM_PROVIDER = "virtualbox"
 VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -17,14 +16,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   }
 
   # create some web servers
-  # https://docs.vagrantup.com/v2/vagrantfile/tips.html
   (1..NUMBER_OF_WEBSERVERS).each do |i|
     config.ssh.insert_key = false
+    config.vm.synced_folder "/opt/flask", "/opt/flask"
+    config.ssh.password
     config.vm.define "web#{i}" do |node|
         node.vm.box = VM_VERSION
         node.vm.hostname = "web#{i}"
         node.vm.network :private_network, ip: "10.0.15.2#{i}"
-        node.vm.network "forwarded_port", guest: 80, host: "808#{i}"
+        node.vm.network "forwarded_port", guest: 5000, host: "808#{i}"
         node.vm.provider VAGRANT_VM_PROVIDER do |vb|
           vb.memory = MEMORY
         end
@@ -34,7 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       if i == NUMBER_OF_WEBSERVERS
           node.vm.provision "ansible" do |ansible|
-            ansible.playbook = "pb_web.yml"
+            ansible.playbook = "app.yml"
             ansible.sudo = true
             ansible.limit = "all"
             ansible.groups = groups
@@ -48,15 +48,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # create load balancer
     config.vm.define "load_balancer" do |lb_config|
         config.ssh.insert_key = false
+        config.ssh.password
         lb_config.vm.box = VM_VERSION
         lb_config.vm.hostname = "lb"
         lb_config.vm.network :private_network, ip: "10.0.15.11"
-        lb_config.vm.network "forwarded_port", guest: 80, host: 8011
+        lb_config.vm.network "forwarded_port", guest: 80, host: 80
         lb_config.vm.provider VAGRANT_VM_PROVIDER do |vb|
           vb.memory = MEMORY
         end
         lb_config.vm.provision "ansible" do |ansible|
-          ansible.playbook = "pb_lb.yml"
+          ansible.playbook = "lb.yml"
           ansible.sudo = true
           ansible.groups = groups
         end

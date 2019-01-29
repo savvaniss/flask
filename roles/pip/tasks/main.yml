@@ -18,7 +18,7 @@
 
 - pip:
     name: flask_marshmallow
+    extra_args: --ignore-installed
 
 - pip:
     name: pymysql
-

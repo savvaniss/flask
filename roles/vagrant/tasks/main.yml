@@ -4,3 +4,6 @@
 
 - name: install virtualbox
   apt: name=virtualbox state=present
+
+- name: run Vagrant
+  shell: (cd /etc/ansible; vagrant up)

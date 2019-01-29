@@ -2,5 +2,5 @@
 - hosts: webservers
   sudo: True
   roles:
-    - common
-    - web
+    - pip
+    - application

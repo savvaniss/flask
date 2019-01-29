@@ -18,10 +18,6 @@
 - name: deploy website content
   template: src=index.html dest=/usr/share/nginx/html/index.html
 
-#- name: deploy website content from github
-#  git: repo=https://github.com/DipeshMitthalal/Sample-Webpage.git
-#         dest=/usr/share/nginx/html/
-#         version={{ app_version }}
 
 - name: enable configuration
   file: >

@@ -1,0 +1,3 @@
+---
+  - name: rub flask per server
+    command: python /opt/flask/app.py
